@@ -45,7 +45,11 @@
             <ArrowDownIcon class="hidden sm:block h-6 w-6 text-gray-300" />
           </button>
           <div v-if="panel" class="absolute top-20 bg-white border rounded-md p-2 w-40">
-            <div class="flex justify-between p-2 hover:bg-red-50 transition duration-200 ease-in-out cursor-pointer" @click="handleLogout">
+            <div class="flex justify-between p-2 hover:bg-neutral-50 transition duration-200 ease-in-out cursor-pointer">
+              Mi cuenta
+              <AccountIcon class="ml-1 h-6 w-6 text-gray-500 hover:text-white" />
+            </div>
+            <div class="flex justify-between p-2 hover:bg-neutral-50 transition duration-200 ease-in-out cursor-pointer" @click="handleLogout">
               Cerrar sesión
               <LogoutIcon class="ml-1 h-6 w-6 text-gray-500 hover:text-white" />
             </div>
@@ -72,6 +76,7 @@ import LogoutIcon from '~/components/icons/LogoutIcon.vue'
 import SearchIcon from '~/components/icons/SearchIcon.vue'
 
 import BreadcrumbComponents from '~/components/BreadcrumbComponents.vue'
+import AccountIcon from '~/components/icons/AccountIcon.vue'
 
 definePageMeta({
   middleware: 'auth'
