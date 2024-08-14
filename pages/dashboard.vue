@@ -1,15 +1,16 @@
 <template>
   <div class="flex bg-gray-100 min-h-screen">
     <aside class="flex flex-col">
-      <NuxtLink to="/dashboard/users" class="inline-flex items-center justify-center h-20 w-full bg-gray-800">
-        <img src="~/assets/images/daptee-logo.svg" alt="daptee-logo">
+      <NuxtLink to="/dashboard/users" class="inline-flex items-center justify-center h-20 w-full bg-dark_gray">
+        <img src="~/assets/images/daptee-logo.svg" alt="daptee-logo" class="h-10 w-auto">
       </NuxtLink>
-      <div class="flex-grow flex flex-col justify-between text-gray-500 bg-gray-800">
+      <div class="flex-grow flex flex-col text-gray-400 bg-dark_gray">
         <nav class="flex flex-col mx-4 my-6 space-y-4">
           <NuxtLink
             to="/dashboard/users"
             class="inline-flex items-center py-3 rounded-lg px-2"
-            :class="{ 'text-blue-600 bg-white': $route.path === '/dashboard/users', 'hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400': true }"
+            :class="{ 'text-violet_color bg-gray-700': $route.path === '/dashboard/users', 'hover:bg-white': true }"
+            @click="handleQuerySearch('/dashboard/users')"
           >
             <UsersIcon class="h-6 w-6" />
             <span class="ml-2">Usuarios</span>
@@ -17,7 +18,8 @@
           <NuxtLink
             to="/dashboard/products"
             class="inline-flex items-center py-3 rounded-lg px-2"
-            :class="{ 'text-blue-600 bg-white': $route.path === '/dashboard/products', 'hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400': true }"
+            :class="{ 'text-violet_color bg-gray-700': $route.path === '/dashboard/products', 'hover:bg-white hover:text-dark_gray': true }"
+            @click="handleQuerySearch('/dashboard/products')"
           >
             <ProductsIcon class="h-6 w-6" />
             <span class="ml-2">Productos</span>
@@ -29,7 +31,7 @@
       <header class="flex justify-end items-center h-20 px-6 sm:px-10 bg-white">
         <div class="relative max-w-md mr-4">
           <SearchIcon />
-          <input v-model="querySearch" type="text" role="search" placeholder="Buscar..." class="py-2 pl-10 pr-4 w-full border-4 border-transparent bg-gray-100 placeholder-gray-400 focus:bg-gray-50 rounded-lg" />
+          <input v-model="querySearch" type="text" role="search" placeholder="Buscar..." class="py-2 pl-10 pr-4 w-full border-4 border-transparent bg-gray-100 placeholder-gray-400 focus:bg-gray-50 rounded-lg hover:bg-gray-200" />
         </div>
         <div class="flex flex-shrink-0 items-center">
           <button class="relative inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg" @click="togglePanel">
@@ -50,7 +52,7 @@
           </div>
         </div>
       </header>
-      <main class="p-6 sm:p-10 space-y-6">
+      <main class="p-6 sm:p-10">
         <div class="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
           <BreadcrumbComponents />
         </div>
@@ -61,8 +63,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted, provide } from 'vue'
-
 import { useAuth } from '~/composables/useAuth'
 
 import UsersIcon from '~/components/icons/UsersIcon.vue'
@@ -117,4 +117,9 @@ const handleLogout = () => {
 const querySearch = ref('')
 provide('querySearch', querySearch)
 
+const handleQuerySearch = (path) => {
+  if (router.path !== path) {
+    querySearch.value = ''
+  }
+}
 </script>

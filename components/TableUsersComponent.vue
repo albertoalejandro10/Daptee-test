@@ -1,7 +1,7 @@
 <template>
   <div v-if="isLoading" class="flex justify-center items-center">
     <client-only>
-      <flower-spinner :animation-duration="2500" :size="120" color="#48bb78" />
+      <flower-spinner :animation-duration="2500" :size="120" color="#3BCDBD" />
     </client-only>
   </div>
   <div v-else class="flex flex-col">

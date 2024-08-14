@@ -1,7 +1,7 @@
 <template>
   <div v-if="isLoading" class="flex justify-center items-center">
     <client-only>
-      <flower-spinner :animation-duration="2500" :size="120" color="#48bb78" />
+      <flower-spinner :animation-duration="2500" :size="120" color="#3BCDBD" />
     </client-only>
   </div>
   <div v-else class="flex flex-col">
@@ -12,7 +12,7 @@
             <tr>
               <th class="w-16 whitespace-nowrap px-4 py-3 font-medium text-gray-800">&nbsp;</th>
               <th class="w-16 whitespace-nowrap px-4 py-3 font-medium text-gray-800">Rank</th>
-              <th class="w-6 whitespace-nowrap px-4 py-3">&nbsp;</th>
+              <th class="w-4/5 whitespace-nowrap px-4 py-3">&nbsp;</th>
             </tr>
           </thead>
 
@@ -23,7 +23,7 @@
               class="transition duration-300 ease-in-out hover:bg-green-50"
             >
               <td class="whitespace-nowrap text-center px-2 py-2">
-                <img :src="returnImage(item.symbol)" :alt="item.name!" class="w-6 h-6" />
+                <img :src="returnIcon(item.symbol)" :alt="item.name!" class="w-6 h-6 ml-2" />
               </td>
               <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-600 text-center">
                 {{ item.rank }}
@@ -86,6 +86,10 @@ const { cryptoData, isLoading } = useCrypto()
 
 const returnImage = (symbol: string | null) => {
   return `https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/icon/${symbol!.toLowerCase()}.png`
+}
+
+const returnIcon = (symbol: string | null) => {
+  return `https://static.coincap.io/assets/icons/${symbol!.toLowerCase()}@2x.png`
 }
 
 const querySearch = inject('querySearch') as Ref<string>

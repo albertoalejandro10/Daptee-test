@@ -11,7 +11,7 @@ export const useCrypto = () => {
   const isLoading = computed(() => cryptoData.value.length === 0)
 
   const getData = async (): Promise<Crypto[]> => {
-    const response = await getCryptoData.get<CryptoResponse>('/assets?limit=10')
+    const response = await getCryptoData.get<CryptoResponse>('/assets?limit=20')
     if (response.status !== 200) {
       throw new Error('Failed to fetch crypto data')
     }

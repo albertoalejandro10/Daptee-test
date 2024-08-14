@@ -1,5 +1,5 @@
 <template>
-  <h2 class="text-xl font-semibold">Productos</h2>
+  <h2 class="text-xl font-semibold mt-2 mb-4">Productos</h2>
   <TableProductsComponent />
 </template>
 
