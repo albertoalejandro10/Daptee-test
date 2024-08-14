@@ -3,7 +3,7 @@
     <ol class="flex items-center gap-1 text-sm text-gray-600">
       <li>
         <span class="block transition hover:text-gray-700">
-          <span class="sr-only"> Home </span>
+          <span class="sr-only">Home</span>
   
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@
       </li>
   
       <li>
-        <span class="block transition hover:text-gray-700 capitalize">{{ actualView }}</span>
+        <span class="block transition hover:text-gray-700">{{ actualView === 'users' ? 'Usuarios' : 'Productos' }}</span>
       </li>
     </ol>
   </nav>

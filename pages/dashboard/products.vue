@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <h2 class="text-xl font-semibold">Productos</h2>
-    <TableProductsComponent />
-  </div>
+  <h2 class="text-xl font-semibold">Productos</h2>
+  <TableProductsComponent />
 </template>
 
 <script setup>

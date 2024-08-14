@@ -39,30 +39,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useAuth } from '~/composables/useAuth'
+import type { HardcodeValues } from '~/interfaces/hardcode-values.interface';
 
 const username: Ref<string> = ref('')
 const password: Ref<string> = ref('')
 const error: Ref<string> = ref('')
 const router = useRouter()
 
-const hardCodeValues = {
+const hardcodeValues: HardcodeValues = {
   username: 'daptee',
   password: 'daptee2024'
 }
 
-const authenticated: Ref<boolean> = useState('authenticated', () => false)
-const authToken = useCookie('authToken', {
-  maxAge: 60 * 60,
-  // sameSite: 'Strict',
-  path: '/'
+const { authenticated, login } = useAuth()
+onMounted(() => {
+  if (authenticated.value) {
+    router.push('/dashboard/users')
+  }
 })
 
 const handleSubmit = () => {
-  if (username.value.toLowerCase() === hardCodeValues.username && password.value.toLowerCase() === hardCodeValues.password) {
-    authenticated.value = true
-    authToken.value = Date.now().toString()
+  if (username.value.toLowerCase() === hardcodeValues.username && password.value.toLowerCase() === hardcodeValues.password) {
+    login(username.value)
     router.push('/dashboard/users')
   } else {
     error.value = 'Invalid username or password'

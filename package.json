@@ -10,17 +10,17 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/fonts": "^0.7.2",
-    "@nuxt/image": "^1.7.0",
+    "@nuxt/fonts": "0.7.2",
+    "@nuxt/image": "1.7.0",
     "@nuxtjs/tailwindcss": "6.12.1",
-    "axios": "^1.7.3",
-    "numeral": "^2.0.6",
+    "axios": "1.7.3",
+    "numeral": "2.0.6",
     "nuxt": "3.12.4",
     "vue": "latest"
   },
   "packageManager": "pnpm@9.7.0+sha512.dc09430156b427f5ecfc79888899e1c39d2d690f004be70e05230b72cb173d96839587545d09429b55ac3c429c801b4dc3c0e002f653830a420fa2dd4e3cf9cf",
   "devDependencies": {
-    "@types/numeral": "^2.0.5",
-    "epic-spinners": "^2.0.0"
+    "@types/numeral": "2.0.5",
+    "epic-spinners": "2.0.0"
   }
 }

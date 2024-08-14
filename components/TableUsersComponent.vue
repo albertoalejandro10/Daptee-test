@@ -10,25 +10,26 @@
         <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead>
             <tr>
-              <th class="w-16 whitespace-nowrap px-4 py-3 font-medium text-gray-800">&nbsp;</th>
-              <th class="w-16 whitespace-nowrap px-4 py-3 font-medium text-gray-800">Rank</th>
+              <th class="w-4 whitespace-nowrap px-4 py-3 font-medium text-gray-800">&nbsp;</th>
+              <th class="w-4/5 whitespace-nowrap px-4 py-3 font-medium text-gray-800 text-left">Nombre</th>
               <th class="w-6 whitespace-nowrap px-4 py-3">&nbsp;</th>
             </tr>
           </thead>
 
           <tbody class="divide-y divide-gray-200">
             <tr
-              v-for="(item, index) in filteredCryptoData"
+              v-for="(item, index) in filteredZeldaData"
               :key="index"
               class="transition duration-300 ease-in-out hover:bg-green-50"
             >
               <td class="whitespace-nowrap text-center px-2 py-2">
-                <img :src="returnImage(item.symbol)" :alt="item.name!" class="w-6 h-6" />
+                <!-- <img :src="returnImage(item.symbol)" :alt="item.name!" class="w-6 h-6" /> -->
+                {{ index + 1 }}
               </td>
-              <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-600 text-center">
-                {{ item.rank }}
+              <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-600">
+                {{ item.name }}
               </td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-600">{{ item.name }}</td>
+              <!-- <td class="whitespace-nowrap px-4 py-2 text-gray-600">{{ item.name }}</td> -->
               <td class="whitespace-nowrap px-4 py-2 text-right">
                 <button @click="toggleMenu(index)">
                   <ThreeDotsIcon class="h-4 w-4" />
@@ -39,7 +40,7 @@
                 >
                   <ul>
                     <li @click="viewItem(item)" class="px-4 py-2 text-gray-700 hover:bg-green-100 cursor-pointer">
-                      Ver Crypto
+                      Ver Juego
                     </li>
                     <li @click="deleteItem(index)" class="px-4 py-2 text-gray-700 hover:bg-red-100 cursor-pointer">
                       Eliminar
@@ -48,7 +49,7 @@
                 </div>
               </td>
             </tr>
-            <tr v-if="filteredCryptoData.length === 0" class="border-b border-gray-200">
+            <tr v-if="filteredZeldaData.length === 0" class="border-b border-gray-200">
               <td colspan="7" class="py-2 px-4 text-center">No se encontraron resultados</td>
             </tr>
           </tbody>
@@ -56,44 +57,33 @@
       </div>
     </div>
   </div>
-  <CryptoModal v-if="selectedItem" :isVisible="isModalVisible" @close="closeModal" :title="selectedItem.name!">
-    <div class="flex flex-row items-center justify-evenly">
-      <div>
-        <img :src="returnImage(selectedItem.symbol)" :alt="selectedItem.name!" class="w-28 h-28" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <p>Rank: {{ selectedItem.rank }}</p>
-        <p>Price: {{ dollar(selectedItem.priceUsd) }}</p>
-        <p>Market Cap: <span :class="selectedItem.changePercent24Hr?.includes('-') ? 'text-red-800' : 'text-green-800'"
-          >{{ dollar(selectedItem.marketCapUsd) }}</span></p>
-        <p>24h Volume: {{ percent(selectedItem.changePercent24Hr) }}</p>
-      </div>
+  <ZeldaModal v-if="selectedItem" :isVisible="isModalVisible" @close="closeModal" :title="selectedItem.name!">
+    <div class="flex flex-col gap-2">
+      <p class="text-pretty leading-6"><strong>Descripción:</strong> {{ selectedItem.description }}</p>
+      <p><strong>Desarrollado por:</strong> {{ selectedItem.developer }}</p>
+      <p><strong>Publicado por:</strong> {{ selectedItem.publisher }}</p> 
+      <p><strong>Fecha de lanzamiento:</strong> {{ selectedItem.released_date }}</p>
     </div>
-  </CryptoModal>
+  </ZeldaModal>
 </template>
 
 <script setup lang="ts">
 import { FlowerSpinner } from 'epic-spinners'
 
 import ThreeDotsIcon from './icons/ThreeDotsIcon.vue'
-import { dollar, percent } from '~/filters/dollar'
 
-import CryptoModal from '~/components/ModalComponent.vue'
-import { useCrypto } from '~/composables/useCrypto'
-import type { Crypto } from '~/interfaces/crypto.interface'
+import ZeldaModal from '~/components/ModalComponent.vue'
+import { useZelda } from '~/composables/useZelda'
+import type { Zelda } from '~/interfaces/zelda-interface'
 
-const { cryptoData, isLoading } = useCrypto()
-
-const returnImage = (symbol: string | null) => {
-  return `https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/icon/${symbol!.toLowerCase()}.png`
-}
+const { zeldaData, isLoading } = useZelda()
 
 const querySearch = inject('querySearch') as Ref<string>
-const filteredCryptoData = computed(() => {
+const filteredZeldaData = computed(() => {
   if (querySearch.value === '') {
-    return cryptoData.value
+    return zeldaData.value
   }
-  return cryptoData.value.filter((item) => {
+  return zeldaData.value.filter((item) => {
     return item.name!.toLowerCase().includes(querySearch.value.toLowerCase())
   })
 })
@@ -107,7 +97,7 @@ const toggleMenu = (index: number) => {
   }
 }
 
-const viewItem = (item: Crypto) => {
+const viewItem = (item: Zelda) => {
   selectedItem.value = item
   isModalVisible.value = true
   visibleMenu.value = -1
@@ -115,12 +105,12 @@ const viewItem = (item: Crypto) => {
 
 // Eliminar un elemento de la lista
 const deleteItem = (index: number) => {
-  cryptoData.value.splice(index, 1)
+  zeldaData.value.splice(index, 1)
   visibleMenu.value = -1
 }
 
 const isModalVisible = ref(false)
-const selectedItem = ref<Crypto | null>(null)
+const selectedItem = ref<Zelda | null>(null)
 const closeModal = () => {
   isModalVisible.value = false
   selectedItem.value = null

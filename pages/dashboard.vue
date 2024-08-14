@@ -29,20 +29,20 @@
       <header class="flex justify-end items-center h-20 px-6 sm:px-10 bg-white">
         <div class="relative max-w-md mr-4">
           <SearchIcon />
-          <input v-model="querySearch" type="text" role="search" placeholder="Buscar..." class="py-2 pl-10 pr-4 w-full border-4 border-transparent placeholder-gray-400 focus:bg-gray-50 rounded-lg" />
+          <input v-model="querySearch" type="text" role="search" placeholder="Buscar..." class="py-2 pl-10 pr-4 w-full border-4 border-transparent bg-gray-100 placeholder-gray-400 focus:bg-gray-50 rounded-lg" />
         </div>
         <div class="flex flex-shrink-0 items-center">
           <button class="relative inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg" @click="togglePanel">
             <span class="sr-only">User Menu</span>
             <div class="hidden md:flex md:flex-col md:items-end md:leading-tight" >
-              <span class="font-semibold">Sinan AYDOĞAN</span>
+              <span class="font-semibold capitalize">{{ user?.username }}</span>
             </div>
             <span class="h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden">
-              <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="user profile photo" class="h-full w-full object-cover">
+              <img src="https://randomuser.me/api/portraits/lego/5.jpg" alt="user profile photo" class="h-full w-full object-cover">
             </span>
             <ArrowDownIcon class="hidden sm:block h-6 w-6 text-gray-300" />
           </button>
-          <div v-if="panel" class="absolute top-20 bg-white border rounded-md p-2 w-56">
+          <div v-if="panel" class="absolute top-20 bg-white border rounded-md p-2 w-40">
             <div class="flex justify-between p-2 hover:bg-red-50 transition duration-200 ease-in-out cursor-pointer" @click="handleLogout">
               Cerrar sesión
               <LogoutIcon class="ml-1 h-6 w-6 text-gray-500 hover:text-white" />
@@ -63,6 +63,8 @@
 <script setup>
 import { ref, onMounted, provide } from 'vue'
 
+import { useAuth } from '~/composables/useAuth'
+
 import UsersIcon from '~/components/icons/UsersIcon.vue'
 import ProductsIcon from '~/components/icons/ProductsIcon.vue'
 import ArrowDownIcon from '~/components/icons/ArrowDownIcon.vue'
@@ -74,6 +76,8 @@ import BreadcrumbComponents from '~/components/BreadcrumbComponents.vue'
 definePageMeta({
   middleware: 'auth'
 })
+
+const { user } = useAuth()
 
 const panel = ref(false)
 const togglePanel = () => {

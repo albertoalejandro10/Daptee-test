@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <h2 class="text-2xl font-semibold">Usuarios</h2>
-    <!-- Contenido de usuarios aquí -->
-  </div>
+    <h2 class="text-xl font-semibold">Usuarios</h2>
+    <TableUsersComponent />
 </template>
 
 <script setup>
-// Lógica específica de usuarios
+import TableUsersComponent from '~/components/TableUsersComponent.vue'
 </script>
